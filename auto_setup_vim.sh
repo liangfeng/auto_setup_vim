@@ -15,7 +15,7 @@ mkdir -p ~/tmp/
 # Fetch vim cfg and plugins.
 cd ~
 rm -rf ~/.vim/
-git clone https://github.com/liangfeng/vimrc.git .vim
+git clone https://github.com/liangfeng/dotvim.git .vim
 ln -sf ~/.vim/_vimrc .vimrc
 
 mkdir -p ~/.vim/bundle/
