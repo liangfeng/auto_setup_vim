@@ -25,6 +25,7 @@ ln -sf ~/.vim/_vimrc .vimrc
 mkdir -p ~/.vim/bundle/
 cd ~/.vim/bundle
 git clone https://github.com/Shougo/neobundle.vim.git
+git clone https://github.com/Shougo/vimproc.vim.git
 
 vim -u ~/.vimrc -c "try | NeoBundleUpdate! $* | finally | qall! | endtry" -U NONE -i NONE -V1 -e -s
 
