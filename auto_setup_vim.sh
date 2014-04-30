@@ -1,13 +1,19 @@
 #! /usr/bin/env bash
 
+VIM_SRC=vim_src
+
 # Install python-devel and lua-devel
 sudo yum -y install python-devel > /dev/null
 sudo yum -y install lua-devel > /dev/null
 
 # Fetch vim source code and build latest vim.
-rm -rf ./vim/
-git clone https://github.com/b4winckler/vim.git vim
-cd ./vim/src/
+if [ -d ../$VIM_SRC/ ]
+    git pull
+elif
+    git clone https://github.com/b4winckler/vim.git $VIM_SRC
+fi
+
+cd ./$VIM_SRC/src/
 make distclean
 ./configure --with-features=huge --disable-selinux --enable-cscope --enable-multibyte --without-x --enable-pythoninterp --enable-luainterp --with-compiledby='Liang Feng <liang.feng98 AT gmail DOT com>'
 make
