@@ -33,6 +33,9 @@ cd ~/.vim/bundle
 git clone https://github.com/Shougo/neobundle.vim.git
 git clone https://github.com/Shougo/vimproc.vim.git
 
+cd vimproc.vim
+make
+
 vim -u ~/.vimrc -c "try | NeoBundleUpdate! $* | finally | qall! | endtry" -U NONE -i NONE -V1 -e -s
 
 # Done
