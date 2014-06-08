@@ -23,6 +23,7 @@ def get_vim_installed_dir_on_win():
 
 def get_vs_dev_cmd_on_win():
     # XXX: When install new version visual c++, need change path.
+    os.environ['SDK_INCLUDE_DIR'] = r'C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include'
     return r'C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat'
 
 # install python-devel and lua-devel, if necessary and on Linux.
@@ -89,8 +90,6 @@ def install_vim_on_win():
     build_gui_options.append('OLE=yes')
     build_gui_options.append('IME=yes')
     build_gui_options.append('GIME=yes')
-
-    os.environ['SDK_INCLUDE_DIR'] = r'C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include'
 
     # build console version, cleanup first.
     build_console_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + ' '.join(build_console_options)
@@ -169,7 +168,7 @@ def install_vim_plugins():
     if sys.platform.startswith('linux'):
         subprocess.call('make', shell=True)
     elif sys.platform.startswith('win'):
-        build_vimproc_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + r'nmake -f make_msvc32.mak'
+        build_vimproc_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + r'nmake -f make_msvc.mak'
         subprocess.call(build_vimproc_cmd, shell=True)
 
     if sys.platform.startswith('linux'):
@@ -179,6 +178,7 @@ def install_vim_plugins():
 
     print 'Installing left plugins...'
     subprocess.call(r'vim -u ' + '"' + vimrc_file + '"' + r' -c "try | NeoBundleUpdate! | finally | qall! | endtry" -U NONE -i NONE -V1 -e -s', shell=True)
+    print
 
 # entry function
 def main():
