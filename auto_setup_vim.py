@@ -3,8 +3,9 @@
 
 import sys
 import subprocess
+from subprocess import call
 import os
-import os.path as path
+from os import path
 
 def get_vim_src_dir():
     return path.join(sys.path[0], '..', 'vim_src')
@@ -12,9 +13,9 @@ def get_vim_src_dir():
 def get_vim_cfg_dir():
     vim_cfg_dir = ''
     if sys.platform.startswith('linux'):
-        vim_cfg_dir = path.join(os.path.expanduser('~'), '.vim')
+        vim_cfg_dir = path.join(path.expanduser('~'), '.vim')
     elif sys.platform.startswith('win'):
-        vim_cfg_dir = r'C:\Program Files (x86)\Vim'
+        vim_cfg_dir = path.join(path.expanduser('~'), 'vimfiles')
     return vim_cfg_dir
 
 def get_vim_installed_dir_on_win():
@@ -29,8 +30,8 @@ def get_vs_dev_cmd_on_win():
 # install python-devel and lua-devel, if necessary and on Linux.
 def install_dep_libs():
     if sys.platform.startswith('linux'):
-        subprocess.call('sudo yum -y install python-devel > /dev/null', shell=True)
-        subprocess.call('sudo yum -y install lua-devel > /dev/null', shell=True)
+        call('sudo yum -y install python-devel > /dev/null', shell=True)
+        call('sudo yum -y install lua-devel > /dev/null', shell=True)
 
 # get latest vim src from github.
 def get_vim_src():
@@ -38,15 +39,15 @@ def get_vim_src():
     if path.exists(vim_src_dir):
         os.chdir(vim_src_dir)
         print 'Updating vim src...'
-        subprocess.call('git pull', shell=True)
+        call('git pull', shell=True)
         os.chdir('..')
     else:
         print 'Cloning vim src...'
-        subprocess.call('git clone https://github.com/b4winckler/vim.git ' + vim_src_dir, shell=True)
+        call('git clone https://github.com/b4winckler/vim.git ' + vim_src_dir, shell=True)
 
 # install vim from src on linux.
 def install_vim_on_linux():
-    subprocess.call('make distclean', shell=True)
+    call('make distclean', shell=True)
 
     configure_cmd = []
     configure_cmd.append('./configure')
@@ -58,10 +59,10 @@ def install_vim_on_linux():
     configure_cmd.append('--enable-pythoninterp')
     configure_cmd.append('--enable-luainterp')
     configure_cmd.append("--with-compiledby='Liang Feng <liang.feng98 AT gmail DOT com>'")
-    subprocess.call(' '.join(configure_cmd), shell=True)
+    call(' '.join(configure_cmd), shell=True)
 
-    subprocess.call('make', shell=True)
-    subprocess.call('sudo make install', shell=True)
+    call('make', shell=True)
+    call('sudo make install', shell=True)
 
 # install vim from src on win.
 def install_vim_on_win():
@@ -93,19 +94,19 @@ def install_vim_on_win():
 
     # build console version, cleanup first.
     build_console_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + ' '.join(build_console_options)
-    subprocess.call(build_console_cmd + ' clean', shell=True)
-    subprocess.call(build_console_cmd, shell=True)
+    call(build_console_cmd + ' clean', shell=True)
+    call(build_console_cmd, shell=True)
 
     # build GUI version, cleanup first.
     build_gui_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + ' '.join(build_gui_options)
-    subprocess.call(build_gui_cmd + ' clean', shell=True)
-    subprocess.call(build_gui_cmd, shell=True)
+    call(build_gui_cmd + ' clean', shell=True)
+    call(build_gui_cmd, shell=True)
 
-    subprocess.call('xcopy ' + get_vim_src_dir() + r'\runtime ' + '"' + get_vim_installed_dir_on_win() + '"' + r' /D /E /H /I /Y', shell=True)
-    subprocess.call('xcopy ' + get_vim_src_dir() + r'\src\xxd\xxd.exe ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
-    subprocess.call('xcopy ' + get_vim_src_dir() + r'\src\*.exe ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
-    subprocess.call('xcopy ' + get_vim_src_dir() + r'\src\*.pdb ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
-    subprocess.call('xcopy ' + get_vim_src_dir() + r'\src\*.map ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
+    call('xcopy ' + get_vim_src_dir() + r'\runtime ' + '"' + get_vim_installed_dir_on_win() + '"' + r' /D /E /H /I /Y', shell=True)
+    call('xcopy ' + get_vim_src_dir() + r'\src\xxd\xxd.exe ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
+    call('xcopy ' + get_vim_src_dir() + r'\src\*.exe ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
+    call('xcopy ' + get_vim_src_dir() + r'\src\*.pdb ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
+    call('xcopy ' + get_vim_src_dir() + r'\src\*.map ' + '"' + get_vim_installed_dir_on_win() + '"' + r'\*' + r' /D /Y', shell=True)
 
 # install latest vim from src.
 def install_vim():
@@ -123,15 +124,15 @@ def get_vim_cfg():
     if path.exists(get_vim_cfg_dir()):
         os.chdir(get_vim_cfg_dir())
         print 'Updating vimrc ...'
-        subprocess.call('git pull', shell=True)
+        call('git pull', shell=True)
         os.chdir('..')
     else:
         print 'Cloning vimrc ...'
-        subprocess.call('git clone https://github.com/liangfeng/dotvim.git ' + '"' + get_vim_cfg_dir() + '"', shell=True)
+        call('git clone https://github.com/liangfeng/dotvim.git ' + '"' + get_vim_cfg_dir() + '"', shell=True)
 
     if sys.platform.startswith('linux'):
-        os.chdir(os.path.expanduser('~'))
-        subprocess.call('ln -sf ~/.vim/_vimrc .vimrc', shell=True)
+        os.chdir(path.expanduser('~'))
+        call('ln -sf ~/.vim/vimrc .vimrc', shell=True)
 
 # get vim cfg and install plugins from github.
 def install_vim_plugins():
@@ -146,38 +147,38 @@ def install_vim_plugins():
     if path.exists('neobundle.vim'):
         os.chdir('neobundle.vim')
         print 'Updating neobundle.vim...'
-        subprocess.call('git pull', shell=True)
+        call('git pull', shell=True)
         os.chdir('..')
     else:
         print 'Cloning neobundle.vim...'
-        subprocess.call('git clone https://github.com/Shougo/neobundle.vim.git', shell=True)
+        call('git clone https://github.com/Shougo/neobundle.vim.git', shell=True)
 
     # install vimproc.vim
     if path.exists('vimproc.vim'):
         os.chdir('vimproc.vim')
         print 'Updating vimproc.vim...'
-        subprocess.call('git pull', shell=True)
+        call('git pull', shell=True)
         os.chdir('..')
     else:
         print 'Cloning vimproc.vim...'
-        subprocess.call('git clone https://github.com/Shougo/vimproc.vim.git', shell=True)
+        call('git clone https://github.com/Shougo/vimproc.vim.git', shell=True)
 
     os.chdir('vimproc.vim')
 
     print 'Building vimproc.vim...'
     if sys.platform.startswith('linux'):
-        subprocess.call('make', shell=True)
+        call('make', shell=True)
     elif sys.platform.startswith('win'):
         build_vimproc_cmd = 'call ' + '"' + get_vs_dev_cmd_on_win() + '"' + ' & ' + r'nmake -f make_msvc.mak'
-        subprocess.call(build_vimproc_cmd, shell=True)
+        call(build_vimproc_cmd, shell=True)
 
     if sys.platform.startswith('linux'):
-        vimrc_file = path.join(os.path.expanduser('~'), '.vimrc')
+        vimrc_file = path.join(path.expanduser('~'), '.vimrc')
     elif sys.platform.startswith('win'):
-        vimrc_file = r'C:\Program Files (x86)\Vim\_vimrc'
+        vimrc_file = path.join(path.join(path.expanduser('~'), 'vimfiles'), 'vimrc')
 
     print 'Installing left plugins...'
-    subprocess.call(r'vim -u ' + '"' + vimrc_file + '"' + r' -c "try | NeoBundleUpdate! | finally | qall! | endtry" -U NONE -i NONE -V1 -e -s', shell=True)
+    call(r'vim -u ' + '"' + vimrc_file + '"' + r' -c "try | NeoBundleUpdate! | finally | qall! | endtry" -U NONE -i NONE -V1 -e -s', shell=True)
     print
 
 # entry function
@@ -187,7 +188,7 @@ def main():
     install_vim()
     get_vim_cfg()
     install_vim_plugins()
-    print 'Done.'
+    print 'Vim auto setup done.'
 
 if __name__ == '__main__':
     main()
