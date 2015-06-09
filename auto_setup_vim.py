@@ -29,7 +29,13 @@ def get_vs_dev_cmd_on_win():
 
 # install python-devel and lua-devel, if necessary and on Linux.
 def install_dep_libs():
-    if sys.platform.startswith('linux'):
+    import platform
+    if platform.linux_distribution()[0] in {'Ubuntu','debian'}:
+        call('sudo apt-get -y install clang libpython2.7 libpython2.7-dev libpython3-dev > /dev/null', shell=True)
+        call('sudo apt-get -y install luajit libluajit-5.1-2 libluajit-5.1-dev > /dev/null', shell=True)
+        call('sudo apt-get -y install xorg-dev  libreadline6-dev libncurses5-dev libgnome2-dev libgnomeui-dev > /dev/null', shell=True)
+        call('sudo apt-get -y install libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev > /dev/null', shell=True)
+    elif platform.linux_distribution()[0] in {'centos', 'redhat'}:
         call('sudo yum -y install python-devel > /dev/null', shell=True)
         call('sudo yum -y install lua-devel > /dev/null', shell=True)
 
@@ -45,7 +51,7 @@ def get_vim_src():
         print 'Cloning vim src...'
         call('git clone https://github.com/b4winckler/vim.git ' + vim_src_dir, shell=True)
 
-# install vim from src on linux.
+# install vim hybird version(GUI&Console) from src on linux.
 def install_vim_on_linux():
     call('make distclean', shell=True)
 
@@ -55,13 +61,15 @@ def install_vim_on_linux():
     configure_cmd.append('--disable-selinux')
     configure_cmd.append('--enable-cscope')
     configure_cmd.append('--enable-multibyte')
-    configure_cmd.append('--without-x')
     configure_cmd.append('--enable-pythoninterp')
+    configure_cmd.append('--enable-python3interp')
     configure_cmd.append('--enable-luainterp')
+    configure_cmd.append('--with-luajit')
+    configure_cmd.append('--enable-gui=gnome2')
     configure_cmd.append("--with-compiledby='Liang Feng <liang.feng98 AT gmail DOT com>'")
     call(' '.join(configure_cmd), shell=True)
 
-    call('make', shell=True)
+    call('make -j 16', shell=True)
     call('sudo make install', shell=True)
 
 # install vim from src on win.
