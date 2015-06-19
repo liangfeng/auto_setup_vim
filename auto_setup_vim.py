@@ -49,7 +49,7 @@ def get_vim_src():
         os.chdir('..')
     else:
         print 'Cloning vim src...'
-        call('git clone https://github.com/b4winckler/vim.git ' + vim_src_dir, shell=True)
+        call('git clone git@github.com:vim/vim.git ' + vim_src_dir, shell=True)
 
 # install vim hybird version(GUI&Console) from src on linux.
 def install_vim_on_linux():
@@ -138,7 +138,7 @@ def get_vim_cfg():
         os.chdir('..')
     else:
         print 'Cloning vimrc ...'
-        call('git clone https://github.com/liangfeng/dotvim.git ' + '"' + get_vim_cfg_dir() + '"', shell=True)
+        call('git clone git@github.com:liangfeng/dotvim.git ' + '"' + get_vim_cfg_dir() + '"', shell=True)
 
     if sys.platform.startswith('linux'):
         os.chdir(path.expanduser('~'))
@@ -161,7 +161,7 @@ def install_vim_plugins():
         os.chdir('..')
     else:
         print 'Cloning neobundle.vim...'
-        call('git clone https://github.com/Shougo/neobundle.vim.git', shell=True)
+        call('git clone git@github.com:Shougo/neobundle.vim.git', shell=True)
 
     # install vimproc.vim
     if path.exists('vimproc.vim'):
@@ -171,7 +171,7 @@ def install_vim_plugins():
         os.chdir('..')
     else:
         print 'Cloning vimproc.vim...'
-        call('git clone https://github.com/Shougo/vimproc.vim.git', shell=True)
+        call('git clone git@github.com:Shougo/vimproc.vim.git', shell=True)
 
     os.chdir('vimproc.vim')
 
