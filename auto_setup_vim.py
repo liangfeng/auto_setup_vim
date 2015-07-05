@@ -45,8 +45,8 @@ def get_vim_src():
     if path.exists(vim_src_dir):
         os.chdir(vim_src_dir)
         print 'Updating vim src...'
+        call('git checkout .', shell=True)
         call('git pull', shell=True)
-        os.chdir('..')
     else:
         print 'Cloning vim src...'
         call('git clone git@github.com:vim/vim.git ' + vim_src_dir, shell=True)
@@ -65,7 +65,8 @@ def install_vim_on_linux():
     configure_cmd.append('--enable-pythoninterp=dynamic')
     configure_cmd.append('--enable-python3interp=dynamic')
     configure_cmd.append('--enable-luainterp=dynamic')
-    configure_cmd.append('--with-luajit')
+    # comment out for 'color_coded' plugin
+    # configure_cmd.append('--with-luajit')
     configure_cmd.append('--enable-gui=gnome2')
     configure_cmd.append("--with-compiledby='Liang Feng <liang.feng98 AT gmail DOT com>'")
     call(' '.join(configure_cmd), shell=True)
@@ -135,7 +136,6 @@ def get_vim_cfg():
         os.chdir(get_vim_cfg_dir())
         print 'Updating vimrc ...'
         call('git pull', shell=True)
-        os.chdir('..')
     else:
         print 'Cloning vimrc ...'
         call('git clone git@github.com:liangfeng/dotvim.git ' + '"' + get_vim_cfg_dir() + '"', shell=True)
