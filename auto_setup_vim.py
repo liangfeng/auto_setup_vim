@@ -33,7 +33,7 @@ def install_dep_libs():
     print 'Install dependency libs...'
     if platform.linux_distribution()[0] in {'Ubuntu','debian'}:
         call('sudo apt-get -y install python-dev libpython-dev libpython2.7 libpython2.7-dev libpython3-dev > /dev/null', shell=True)
-        call('sudo apt-get -y install liblua5.2 liblua5.2-dev luajit libluajit-5.1-2 libluajit-5.1-dev > /dev/null', shell=True)
+        call('sudo apt-get -y install lua5.2 liblua5.2 liblua5.2-dev luajit libluajit-5.1-2 libluajit-5.1-dev > /dev/null', shell=True)
         call('sudo apt-get -y install xorg-dev  libreadline6-dev libncurses5-dev libgnome2-dev libgnomeui-dev > /dev/null', shell=True)
         call('sudo apt-get -y install libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev > /dev/null', shell=True)
     elif platform.linux_distribution()[0] in {'centos', 'redhat'}:
